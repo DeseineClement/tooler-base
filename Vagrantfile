@@ -1,7 +1,9 @@
 require "yaml"
 require "./src/tooler"
 
-Vagrant.configure("2") do |config|
+vagrant_api_version = 2
+
+Vagrant.configure(vagrant_api_version) do |config|
   config.vm.box = "archlinux/archlinux"
   scripts_path = "#{File.expand_path(File.dirname(__FILE__))}/scripts"
   config_path = "#{File.expand_path(File.dirname(__FILE__))}/config"
