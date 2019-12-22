@@ -1,0 +1,8 @@
+packages:
+  - zsh
+  - zip
+  - unzip
+  - htop
+  - iftop
+  - wget
+  - git
