@@ -2,6 +2,7 @@ require File.expand_path("#{File.dirname(__FILE__)}/src/tooler.rb")
 require 'yaml'
 
 config_dir = File.expand_path("#{File.dirname(__FILE__)}/config")
+tools_dir = "#{config_dir}/tools"
 provider_config_file = "#{config_dir}/providers.yml"
 base_config_file = "#{config_dir}/base.yml"
 
@@ -12,8 +13,10 @@ Vagrant.configure("2") do |config|
       config,
       File.expand_path("#{File.dirname(__FILE__)}/scripts"),
       File.expand_path("#{File.dirname(__FILE__)}/ansible"),
-      (File.exist? provider_config_file) ? YAML::load(File.read(provider_config_file)) : {},
-      (File.exist? base_config_file) ? YAML::load(File.read(base_config_file)) : {}
+      File.expand_path("#{File.dirname(__FILE__)}/config")
+      #(File.exist? provider_config_file) ? YAML::load(File.read(provider_config_file)) : {},
+      #(File.exist? base_config_file) ? YAML::load(File.read(base_config_file)) : {},
+      #tools_dir
   )
 
 end
