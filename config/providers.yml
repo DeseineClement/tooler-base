@@ -1,0 +1,4 @@
+---
+virtualbox:
+  box: generic/ubuntu1804
+  vm_name: tooler-base
