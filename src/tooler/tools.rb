@@ -12,7 +12,7 @@ module Tools
           ansible.become = true
           ansible.become_user = "root"
           ansible.host_vars = {
-              "tooler-base" => tool_config
+            "tooler-base" => tool_config,
           }
         end
       end
