@@ -14,9 +14,6 @@ Vagrant.configure("2") do |config|
       File.expand_path("#{File.dirname(__FILE__)}/scripts"),
       File.expand_path("#{File.dirname(__FILE__)}/ansible"),
       File.expand_path("#{File.dirname(__FILE__)}/config")
-      #(File.exist? provider_config_file) ? YAML::load(File.read(provider_config_file)) : {},
-      #(File.exist? base_config_file) ? YAML::load(File.read(base_config_file)) : {},
-      #tools_dir
   )
 
 end
