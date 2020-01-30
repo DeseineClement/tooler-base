@@ -1,5 +1,0 @@
----
-- name: Converge
-  hosts: all
-  roles:
-    - role: ubunutu/18.04/default-packages
