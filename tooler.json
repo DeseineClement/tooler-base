@@ -34,5 +34,11 @@
         "/usr/bin/bash ./enable-ssh.sh<enter>"
       ]
     }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/playbooks/base.yml"
+    }
   ]
 }

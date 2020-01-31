@@ -4,4 +4,4 @@
   hosts:
     - all
   roles:
-    - ubuntu/18.04/default-packages
+    - archlinux/default-packages
