@@ -1,0 +1,8 @@
+{
+  "ssh_username": "vagrant",
+  "ssh_password": "vagrant",
+  "iso_url": "http://archlinux.de-labrusse.fr/iso/2020.01.01/archlinux-2020.01.01-x86_64.iso",
+  "iso_checksum": "555276cf34d98caaa1197e4c6179d5e3",
+  "iso_checksum_type": "md5",
+  "http_directory": "scripts"
+}
