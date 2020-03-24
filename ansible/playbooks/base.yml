@@ -1,7 +1,0 @@
----
-
-- name: Install base
-  hosts:
-    - all
-  roles:
-    - archlinux/default-packages

@@ -1,0 +1,6 @@
+---
+- name: Install base
+  hosts:
+    - all
+  roles:
+    - debian/buster/base

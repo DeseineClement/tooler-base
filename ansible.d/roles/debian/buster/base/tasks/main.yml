@@ -1,0 +1,17 @@
+---
+# tasks file for debian/buster/base
+
+- name: Upgrade installed packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Install default packages
+  apt:
+    name:
+      - htop
+      - iftop
+      - wget
+      - git
+      - zsh
+      - sudo
