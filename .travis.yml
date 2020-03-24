@@ -1,0 +1,11 @@
+os: linux
+
+dist: bionic
+
+before_install:
+  - wget -q -O- http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get install linux-headers-`uname -r` virtualbox
+
+script:
+  - echo "ok"
