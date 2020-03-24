@@ -8,4 +8,4 @@ install:
   - ${TRAVIS_BUILD_DIR}/.travis.d/install_${TRAVIS_OS_NAME}.sh
 
 script:
-  - echo "ok"
+  - packer build ${TRAVIS_BUILD_DIR}/tooler.build.${TRAVIS_OS_NAME}.pkr.hcl
