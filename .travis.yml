@@ -2,8 +2,10 @@
 os: [linux, osx]
 
 before_install:
-  - chmod +x ${TRAVIS_BUILD_DIR}/.travis.d/install_${TRAVIS_OS_NAME}.sh
-  - sudo ${TRAVIS_BUILD_DIR}/.travis.d/install_${TRAVIS_OS_NAME}.sh
+  - chmod +x ${TRAVIS_BUILD_DIR}/.travis.d/*${TRAVIS_OS_NAME}.sh
+
+install:
+  - ${TRAVIS_BUILD_DIR}/.travis.d/install_${TRAVIS_OS_NAME}.sh
 
 script:
   - echo "ok"
