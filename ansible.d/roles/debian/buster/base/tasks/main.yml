@@ -1,0 +1,21 @@
+---
+# tasks file for debian/buster/base
+
+- name: Upgrade installed packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Install default packages
+  apt:
+    name:
+      - unzip
+      - htop
+      - iftop
+      - wget
+      - git
+      - zsh
+      - sudo
+      - gnupg-utils
+
+- include: ssh.yml

@@ -1,0 +1,6 @@
+---
+- name: Install VirtualBox Guest Additions
+  hosts:
+    - all
+  roles:
+    - debian/buster/virtualbox

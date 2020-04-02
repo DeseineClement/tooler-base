@@ -1,0 +1,32 @@
+---
+# tasks file for debian/buster/base
+
+- set_fact:
+    ssh_directory: /home/vagrant/.ssh
+
+- name: Create SSH config
+  file:
+    path: "{{ ssh_directory }}"
+    state: directory
+    mode: '0700'
+    owner: vagrant
+    group: vagrant
+
+- name: Download Unsecure vagrant SSH key
+  get_url:
+    url: https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
+    dest: "{{ ssh_directory }}/authorized_keys"
+    mode: '0600'
+    owner: vagrant
+    group: vagrant
+
+- name: Create temporary download directory
+  tempfile:
+    state: directory
+    suffix: ssh
+  register: tmpdir
+
+- name: Remove temporary download directory
+  file:
+    path: "{{ tmpdir.path }}"
+    state: absent
