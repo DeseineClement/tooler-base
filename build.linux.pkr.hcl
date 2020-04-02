@@ -31,7 +31,7 @@ build {
 
   provisioner "shell" {
     execute_command =  "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
-    script = "scripts.d/clean.sh"
+    script          = "scripts.d/clean.sh"
   }
 }
 
