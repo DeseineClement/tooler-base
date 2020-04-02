@@ -1,8 +1,0 @@
----
-packages:
-  - htop
-  - iftop
-  - git
-  - zip
-  - unzip
-  - wget
