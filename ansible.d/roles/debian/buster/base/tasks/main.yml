@@ -9,9 +9,13 @@
 - name: Install default packages
   apt:
     name:
+      - unzip
       - htop
       - iftop
       - wget
       - git
       - zsh
       - sudo
+      - gnupg-utils
+
+- include: ssh.yml

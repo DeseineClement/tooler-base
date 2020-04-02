@@ -1,0 +1,43 @@
+---
+# tasks file for debian/buster/terraform
+
+- set_fact:
+    terraform_binary_path: "/usr/local/bin/terraform-{{ item.version }}"
+    terraform_alternative_path: "/usr/local/bin/terraform"
+    terraform_unarchived_binary_path: "{{ tmpdir.path }}/terraform"
+    terraform_download_url: "https://releases.hashicorp.com/terraform/{{ item.version }}/terraform_{{ item.version }}_linux_amd64.zip"
+
+- name: "Check if terraform {{ item.version }} hasn't been downloaded yet"
+  stat:
+    path: "{{ terraform_binary_path }}"
+  register: file_info
+
+- name: "Unarchive Terraform {{ item.version }} binary"
+  unarchive:
+    src: "{{ terraform_download_url }}"
+    dest: "{{ tmpdir.path }}"
+    mode: "0644"
+    remote_src: yes
+  when: file_info.stat.exists == False
+
+- name: Copy Terraform executable to bin directory
+  copy:
+      src: "{{ terraform_unarchived_binary_path }}"
+      dest: "{{ terraform_binary_path }}"
+      mode: '0755'
+      remote_src: yes
+  when: file_info.stat.exists == False
+
+- name: Remove downloaded binary
+  file:
+      path: "{{ terraform_unarchived_binary_path }}"
+      state: absent
+  when: file_info.stat.exists == False
+
+- name: "Create alternative for Terraform {{ item.version }} {{ (item.default == 1) | ternary(' (default version)', '') }}"
+  alternatives:
+      name: terraform
+      link: "{{ terraform_alternative_path }}"
+      path: "{{ terraform_binary_path }}"
+      priority: "{{ (item.default == 1) | ternary(100, 0) }}"
+  when: file_info.stat.exists == False

@@ -1,0 +1,16 @@
+---
+# tasks file for debian/buster/terraform
+
+- name: create temporary download directory
+  tempfile:
+    state: directory
+    suffix: terraform
+  register: tmpdir
+
+- include: download.yml
+  loop: "{{ terraform_versions }}"
+
+- name: Remove temporary download directory
+  file:
+    path: "{{ tmpdir.path }}"
+    state: absent

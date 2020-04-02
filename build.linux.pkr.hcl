@@ -1,3 +1,10 @@
+variable "terraform_versions" {
+  type = list(object({
+    version = string
+    default = number
+  }))
+}
+
 build {
   sources = [
     "virtualbox-iso.debian"
@@ -5,13 +12,26 @@ build {
 
   provisioner "shell" {
     execute_command =  "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
-    scripts = [
+    scripts         = [
       "scripts.d/aptitude.sh",
       "scripts.d/python.sh",
     ]
   }
+
   provisioner "ansible" {
-    playbook_file = "ansible.d/playbooks/all.yml"
+    playbook_file   = "ansible.d/playbooks/shared.yml"
+    extra_arguments = [
+      "--extra-vars", "terraform_versions=${ jsonencode(var.terraform_versions) }"
+    ]
+  }
+
+  provisioner "ansible" {
+    playbook_file = "ansible.d/playbooks/virtualbox.yml"
+  }
+
+  provisioner "shell" {
+    execute_command =  "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    script = "scripts.d/clean.sh"
   }
 }
 
@@ -24,9 +44,9 @@ source "virtualbox-iso" "debian" {
   iso_checksum_type = "sha256"
   ssh_username      = "vagrant"
   ssh_password      = "vagrant"
-  ssh_timeout       = "20m"
+  ssh_timeout       = "1h"
   ssh_port          = 22
-  disk_size         = 4096
+  disk_size         = 32768
   http_directory    = "http.d"
   output_directory  = "output-virtualbox-iso"
   shutdown_command  = "echo 'vagrant'|sudo -S /sbin/shutdown -hP now"
@@ -50,6 +70,6 @@ source "virtualbox-iso" "debian" {
 
   vboxmanage = [
     [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
-    [ "modifyvm", "{{.Name}}", "--cpus", "1"]
+    [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
   ]
 }

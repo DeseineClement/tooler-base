@@ -1,0 +1,44 @@
+---
+# tasks file for debian/buster/virtualbox
+
+- set_fact:
+    mnt_dir: /mnt/cdrom
+    vbox_guest_additions_iso: /home/vagrant/VBoxGuestAdditions.iso
+
+- name: Create mount directory
+  file:
+    path: "{{ mnt_dir }}"
+    state: directory
+
+- name: Mount VBoxGuestAdditions
+  mount:
+    path: "{{ mnt_dir }}"
+    src: "{{ vbox_guest_additions_iso }}"
+    opts: ro,loop
+    state: mounted
+    fstype: iso9660
+
+- name: Execute Linux Additions script
+  shell: "(yes | {{ mnt_dir }}/VBoxLinuxAdditions.run) || true"
+
+- name: Umount VBoxGuestAdditions
+  mount:
+    path: "{{ mnt_dir }}"
+    state: unmounted
+
+- name: Delete mount directory
+  file:
+    path: "{{ mnt_dir }}"
+    state: absent
+
+- name: Delete Vbox guest additions iso
+  file:
+    path: "{{ vbox_guest_additions_iso }}"
+    state: absent
+
+- name: Remove iso fstab entry
+  lineinfile:
+    dest: /etc/fstab
+    regexp: "{{ vbox_guest_additions_iso }}"
+    line: "{{ vbox_guest_additions_iso }}	{{ mnt_dir }}	iso9660	ro,loop	0	0"
+    state: absent
