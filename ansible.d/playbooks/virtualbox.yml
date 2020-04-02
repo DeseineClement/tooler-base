@@ -1,5 +1,5 @@
 ---
-- name: Install base
+- name: Install VirtualBox Guest Additions
   hosts:
     - all
   roles:
